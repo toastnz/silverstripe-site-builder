@@ -22,7 +22,7 @@
     "silverstripe-australia/gridfieldextensions": "~1.1"
   },
   "support": {
-    "issues": "https://github.com/Rhym/silverstripe-site-builder/issues"
+    "issues": "https://github.com/toastnz/silverstripe-site-builder/issues"
   },
   "extra": {
     "installer-name": "silverstripe-site-builder"
