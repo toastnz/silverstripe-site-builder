@@ -6,3 +6,7 @@
 *.map
 /.sass-cache/
 /node_modules/
+framework/
+silverstripe-design-field/
+silverstripe-color-field/
+gridfieldextensions/
