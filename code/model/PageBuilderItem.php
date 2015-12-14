@@ -18,13 +18,13 @@
  * @method Image Image
  * @method SliderItem SliderItems
  */
-class PageBuilderItem extends DataObject
-{
+class PageBuilderItem extends DataObject {
 
     /**
      * @var array
      */
     private static $db = array(
+        'RemovePadding' => 'Varchar',
         'SortOrder' => 'Int',
         'SizeX' => 'Int',
         'Type' => 'Enum(array("Content", "Image", "Video", "Slider"))',
@@ -86,8 +86,7 @@ class PageBuilderItem extends DataObject
     /**
      * @return RequiredFields
      */
-    public function getCMSValidator()
-    {
+    public function getCMSValidator() {
         return new RequiredFields(array(
             'Title',
             'Type'
@@ -97,13 +96,13 @@ class PageBuilderItem extends DataObject
     /**
      * @return FieldList
      */
-    public function getCMSFields()
-    {
+    public function getCMSFields() {
         /** =========================================
          * @var FieldList $fields
          * @var TextField $title
          * @var OptionsetField $type
          * @var HtmlEditorField $content
+         * @var CheckboxField $RemovePadding
          * @var CheckboxField $externalLink
          * @var UploadField $image
          * @var FieldGroup $linkSettings
@@ -119,6 +118,7 @@ class PageBuilderItem extends DataObject
 
         $contentField = $content = HtmlEditorField::create('Content');
         $content->setRows(15);
+        $fields->addfieldToTab('Root.Main', CheckboxField::create('RemovePadding', 'Remove padding from image'));
 
         if ($this->Type == 'Content') {
             $fields->addfieldToTab('Root.Main', $contentField);
@@ -155,7 +155,7 @@ class PageBuilderItem extends DataObject
         if ($this->Type == 'Slider') {
             $config = GridFieldConfig_RelationEditor::create(10);
             $config->addComponent(GridFieldOrderableRows::create('SortOrder'))
-                ->addComponent(new GridFieldDeleteAction());
+                   ->addComponent(new GridFieldDeleteAction());
             $gridField = GridField::create(
                 'SliderItems',
                 'Items',
@@ -171,8 +171,7 @@ class PageBuilderItem extends DataObject
     /**
      * @return bool|mixed|string
      */
-    public function getLink()
-    {
+    public function getLink() {
         if ($internalLink = $this->InternalLink()->ID) {
             return $this->InternalLink()->Link();
         } else {
@@ -186,8 +185,7 @@ class PageBuilderItem extends DataObject
     /**
      * @return bool|Text
      */
-    public function getVideoLink()
-    {
+    public function getVideoLink() {
         if ($youtubeLink = $this->YoutubeLink) {
             return $youtubeLink;
         } else {
@@ -201,8 +199,7 @@ class PageBuilderItem extends DataObject
     /**
      * @return HTMLText
      */
-    public function forTemplate()
-    {
+    public function forTemplate() {
         switch ($this->Type) {
             case 'Content':
                 $template = 'SiteBuilderItem_Content';
@@ -226,8 +223,7 @@ class PageBuilderItem extends DataObject
     /**
      * On Before Write
      */
-    protected function onBeforeWrite()
-    {
+    protected function onBeforeWrite() {
         /** Set SortOrder */
         if (!$this->SortOrder) {
             $this->SortOrder = DataObject::get($this->ClassName)->max('SortOrder') + 1;
@@ -235,8 +231,7 @@ class PageBuilderItem extends DataObject
         parent::onBeforeWrite();
     }
 
-    public function getClasses()
-    {
+    public function getClasses() {
         $classes = '';
         $columnClass = 'is-column-';
         $classes .= $columnClass . $this->SizeX;
