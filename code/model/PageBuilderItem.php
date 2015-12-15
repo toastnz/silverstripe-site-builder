@@ -25,6 +25,8 @@ class PageBuilderItem extends DataObject {
      */
     private static $db = array(
         'RemovePadding' => 'Varchar',
+        'MaxWidth' => 'Varchar',
+        'CoverImage' => 'Varchar',
         'SortOrder' => 'Int',
         'SizeX' => 'Int',
         'Type' => 'Enum(array("Content", "Image", "Video", "Slider"))',
@@ -119,6 +121,8 @@ class PageBuilderItem extends DataObject {
         $contentField = $content = HtmlEditorField::create('Content');
         $content->setRows(15);
         $fields->addfieldToTab('Root.Main', CheckboxField::create('RemovePadding', 'Remove padding from image'));
+        $fields->addfieldToTab('Root.Main', CheckboxField::create('CoverImage', 'Make image a cover image'));
+        $fields->addfieldToTab('Root.Main', TextField::create('MaxWidth', 'Max width of text fields')->setAttribute('placeholder', 'e.g. 768'));
 
         if ($this->Type == 'Content') {
             $fields->addfieldToTab('Root.Main', $contentField);
