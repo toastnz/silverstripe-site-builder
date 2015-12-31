@@ -113,5 +113,4 @@ class PageBuilderSliderItem extends DataObject
         }
         parent::onBeforeWrite();
     }
-
 }

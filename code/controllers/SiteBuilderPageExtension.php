@@ -45,5 +45,4 @@ class SiteBuilderPageExtension extends DataExtension
             $this->owner->ID
         ));
     }
-
 }
