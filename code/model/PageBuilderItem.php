@@ -18,7 +18,8 @@
  * @method Image Image
  * @method SliderItem SliderItems
  */
-class PageBuilderItem extends DataObject {
+class PageBuilderItem extends DataObject
+{
 
     /**
      * @var array
@@ -88,7 +89,8 @@ class PageBuilderItem extends DataObject {
     /**
      * @return RequiredFields
      */
-    public function getCMSValidator() {
+    public function getCMSValidator()
+    {
         return new RequiredFields(array(
             'Title',
             'Type'
@@ -98,7 +100,8 @@ class PageBuilderItem extends DataObject {
     /**
      * @return FieldList
      */
-    public function getCMSFields() {
+    public function getCMSFields()
+    {
         /** =========================================
          * @var FieldList $fields
          * @var TextField $title
@@ -175,7 +178,8 @@ class PageBuilderItem extends DataObject {
     /**
      * @return bool|mixed|string
      */
-    public function getLink() {
+    public function getLink()
+    {
         if ($internalLink = $this->InternalLink()->ID) {
             return $this->InternalLink()->Link();
         } else {
@@ -189,7 +193,8 @@ class PageBuilderItem extends DataObject {
     /**
      * @return bool|Text
      */
-    public function getVideoLink() {
+    public function getVideoLink()
+    {
         if ($youtubeLink = $this->YoutubeLink) {
             return $youtubeLink;
         } else {
@@ -203,7 +208,8 @@ class PageBuilderItem extends DataObject {
     /**
      * @return HTMLText
      */
-    public function forTemplate() {
+    public function forTemplate()
+    {
         switch ($this->Type) {
             case 'Content':
                 $template = 'SiteBuilderItem_Content';
@@ -221,13 +227,13 @@ class PageBuilderItem extends DataObject {
                 $template = 'SiteBuilderItem_Content';
         }
         return $this->renderWith($template);
-
     }
 
     /**
      * On Before Write
      */
-    protected function onBeforeWrite() {
+    protected function onBeforeWrite()
+    {
         /** Set SortOrder */
         if (!$this->SortOrder) {
             $this->SortOrder = DataObject::get($this->ClassName)->max('SortOrder') + 1;
@@ -235,12 +241,12 @@ class PageBuilderItem extends DataObject {
         parent::onBeforeWrite();
     }
 
-    public function getClasses() {
+    public function getClasses()
+    {
         $classes = '';
         $columnClass = 'is-column-';
         $classes .= $columnClass . $this->SizeX;
 
         return $classes;
     }
-
 }

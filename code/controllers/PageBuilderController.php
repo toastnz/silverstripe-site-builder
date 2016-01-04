@@ -50,9 +50,7 @@ class PageBuilderController extends Page_Controller
                 $pageItem->write();
             }
         } else {
-
         }
         return true;
     }
-
 }
